@@ -14,6 +14,10 @@
     [com.fulcrologic.fulcro.algorithms.form-state :as fs]
     [clojure.string :as str]))
 
+;;;;;;;;;;;;;;;;
+;; Utils
+;;;;;;;;;;;;;;;;
+
 (defn field [{:keys [label valid? error-message] :as props}]
   (let [input-props (-> props (assoc :name label) (dissoc :label :valid? :error-message))]
     (div :.ui.field
@@ -21,6 +25,10 @@
       (dom/input input-props)
       (dom/div :.ui.error.message {:classes [(when valid? "hidden")]}
         error-message))))
+
+;;;;;;;;;;;;;;;;
+;; SignUp
+;;;;;;;;;;;;;;;;
 
 (defsc SignupSuccess [this props]
   {:query         ['*]
@@ -77,6 +85,10 @@
           "Sign Up")))))
 
 (declare Session)
+
+;;;;;;;;;;;;;;;;
+;; LogIn
+;;;;;;;;;;;;;;;;
 
 (defsc Login [this {:account/keys [email]
                     :ui/keys      [error open?] :as props}]
@@ -136,6 +148,10 @@
 
 (def ui-login (comp/factory Login))
 
+;;;;;;;;;;;;;;;;
+;; Main
+;;;;;;;;;;;;;;;;
+
 (defsc Main [this props]
   {:query         [:main/welcome-message]
    :initial-state {:main/welcome-message "Hi!"}
@@ -144,6 +160,10 @@
    :will-enter    (fn [_ _] (dr/route-immediate [:component/id :main]))}
   (div :.ui.container.segment
     (h3 "Main")))
+
+;;;;;;;;;;;;;;;;
+;; Settings
+;;;;;;;;;;;;;;;;
 
 (defsc Settings [this {:keys [:account/time-zone :account/real-name] :as props}]
   {:query         [:account/time-zone :account/real-name]
@@ -159,6 +179,10 @@
 
 (def ui-top-router (comp/factory TopRouter))
 
+;;;;;;;;;;;;;;;;
+;; Session
+;;;;;;;;;;;;;;;;
+
 (defsc Session
   "Session representation. Used primarily for server queries. On-screen representation happens in Login component."
   [this {:keys [:session/valid? :account/name] :as props}]
@@ -170,6 +194,10 @@
    :initial-state {:session/valid? false :account/name ""}})
 
 (def ui-session (prim/factory Session))
+
+;;;;;;;;;;;;;;;;
+;; TopChrome
+;;;;;;;;;;;;;;;;
 
 (defsc TopChrome [this {:root/keys [router current-session login]}]
   {:query         [{:root/router (comp/get-query TopRouter)}
@@ -194,6 +222,10 @@
           (ui-top-router router))))))
 
 (def ui-top-chrome (comp/factory TopChrome))
+
+;;;;;;;;;;;;;;;;
+;; TopChrome
+;;;;;;;;;;;;;;;;
 
 (defsc Root [this {:root/keys [top-chrome]}]
   {:query             [{:root/top-chrome (comp/get-query TopChrome)}]
