@@ -22,7 +22,7 @@
   (app/mount! SPA root/Root "app")
   (cssi/upsert-css "componentcss" {:component root/Root})
   (log/info "Starting session machine.")
-  (uism/begin! SPA session/session-machine ::session/session
+  #_(uism/begin! SPA session/session-machine ::session/session
     {:actor/login-form      root/Login
      :actor/current-session root/Session}))
 
