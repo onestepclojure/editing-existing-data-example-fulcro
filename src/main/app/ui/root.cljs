@@ -153,26 +153,6 @@
 ;; ;;;;;;;;;;;;;;;;
 
 
-;; (defmutation bump-number [ignored]
-;;              (action [{:keys [state]}]
-;;                      (swap! state update :ui/number inc)))
-
-;; (defsc BumpNumber [this {:ui/keys [number]}]
-;;        {:query         [:ui/number]
-;;         :initial-state {:ui/number 0}}
-;;        (dom/div
-;;          (dom/h4 "This is an example.")
-;;          (dom/button {:onClick #(comp/transact! this `[(bump-number {})])}
-;;                      "You've clicked this button " number " times.")))
-
-;; (def ui-login (comp/factory Login))
-
-
-;; ;;;;;;;;;;;;;;;;
-;; ;; Main
-;; ;;;;;;;;;;;;;;;;
-
-
 ;; (defsc Main [this props]
 ;;   {:query         [:main/welcome-message]
 ;;    :initial-state {:main/welcome-message "Hi!"}
@@ -248,14 +228,41 @@
 ;; (def ui-top-chrome (comp/factory TopChrome))
 
 ;; ;;;;;;;;;;;;;;;;
-;; ;; TopChrome
+;; ;; Bump Number
 ;; ;;;;;;;;;;;;;;;;
+
+;; (defmutation bump-number [ignored]
+;;   (action [{:keys [state]}]
+;;           (swap! state update :root/number inc)))
+
+;; (defsc BumpNumber [this {:root/keys [number]}]
+;;        {:query         [:root/number]
+;;         :initial-state {:root/number 0}}
+;;        (dom/div
+;;          (dom/h4 "This is an example.")
+;;          (dom/button {:onClick #(comp/transact! this `[(bump-number {})])}
+;;                      "You've clicked this button " number " times.")))
+
+;; (def ui-bump-number (comp/factory BumpNumber))
+
+;; ;;;;;;;;;;;;;;;;
+;; ;; ROOT
+;; ;;;;;;;;;;;;;;;;
+
 
 ;; (defsc Root [this {:root/keys [top-chrome]}]
 ;;   {:query             [{:root/top-chrome (comp/get-query TopChrome)}]
 ;;    :ident             (fn [] [:component/id :ROOT])
 ;;    :initial-state     {:root/top-chrome {}}}
-;;   (ui-top-chrome top-chrome))
+;;   (div
+;;     (ui-top-chrome top-chrome)
+;;     (ui-bump-number {})))
+
+
+;;;;;;;;;;;;;;;;
+;; Simple Example
+;;;;;;;;;;;;;;;;
+
 
 (defmutation bump-number [ignored]
              (action [{:keys [state]}]
