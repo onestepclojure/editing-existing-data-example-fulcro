@@ -299,7 +299,7 @@
   (defn ui-iframe [props child]
     (factory (assoc props :child child))))
 
-
+;;;; actual demo code
 
 (declare Root PhoneForm)
 
@@ -385,7 +385,7 @@
   {:query         [:phone/id :phone/number :phone/type]
    :initial-state {:phone/id :param/id :phone/number :param/number :phone/type :param/type}
    :ident         :phone/id}
-  (dom/li :.ui.item
+  (dom/li :.ui.item.button.secondary
           (dom/a {:onClick (fn [] (onSelect id))}
                  (str number " (" (get {:home "Home" :work "Work" nil "Unknown"} type) ")"))))
 
